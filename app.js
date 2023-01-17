@@ -1,5 +1,4 @@
 
-// 10. Generera en kortlek med 52 kort där varje kort innehåller en färg och ett värde mellan 2 och 14 (ess).
 let cardstack = [];
 let suits = ['&hearts;', '&diams;', '&spades;', '&clubs;'];
 
@@ -27,22 +26,14 @@ for (let i = 0; i < suits.length; i++) {
         }
         // Lägger till det nya kortet i arrayen cardstack
         cardstack.push(newCard);
-
     }
 }
-
-let score = document.querySelector('header p .score');
-let scoreCounter = 0;
-let triesLeft = document.querySelector('.attempts');
-let triesLeftCounter = 3;
-let cardsLeft = document.querySelector('main .left');
 
 let nextLower = document.querySelector('#lower');
 let nextEqual = document.querySelector('#equal');
 let nextHigher = document.querySelector('#higher');
 
 let newCard = 0;
-
 let oldCard = renderCard();
 
 function randomNumber() {
@@ -50,9 +41,11 @@ function randomNumber() {
 };
 
 function setCard(card) {
+    // Skapa kortet
     let cardEl = document.createElement('article');
     cardEl.classList.add('card');
     
+    // Ge kortet rätt färg i UIn
     if (card.suit === '&hearts;' || card.suit === '&diams;') {
         card.color = 'red';
     } else {
@@ -80,9 +73,7 @@ function renderCard() {
     let index = randomNumber();
     setCard(cardstack[index]);
 
-
-    // cardDisplay.textContent = cardstack[index].value + ' ' + cardstack[index].suit;
-
+    // Fixar jämförelsevärden (nummer istället för bokstäver)
     if (cardstack[index].value === 'J') {
         cardstack[index].value = 11;
     } else if (cardstack[index].value === 'Q') {
@@ -102,23 +93,26 @@ function renderCard() {
     return renderedCard;
 };
 
+
 function addPoints() {
-    scoreCounter++;
-    score.textContent = `${scoreCounter}`;
+    let score = document.querySelector('header p .score');
+    let scoreCounter = parseInt(score.innerHTML) + 100;
+    score.innerHTML = `${scoreCounter}`;
 };
 
 function decreaseCards() {
+    let cardsLeft = document.querySelector('main .left');
     let cardsLeftCounter = cardstack.length;
     cardsLeft.textContent = `${cardsLeftCounter} kort kvar.`;
 };
 
 function wrong() {
-    triesLeftCounter--;
+    let triesLeft = document.querySelector('.attempts');
+    let triesLeftCounter = triesLeft.innerHTML - 1;
 
     if (triesLeftCounter < 1) {
-        triesLeft.textContent = 'Spelet slut!';
-        scoreCounter = -1;
-        addPoints();
+        alert('Spelet slut!');
+        return location.reload();
     } else {
         triesLeft.textContent = triesLeftCounter;
     }
@@ -129,7 +123,6 @@ nextLower.addEventListener('click', function () {
 
     decreaseCards();
     if (newCard < oldCard) {
-        console.log('lägre');
         addPoints();
     } else {
         wrong();
@@ -142,7 +135,6 @@ nextEqual.addEventListener('click', function () {
     decreaseCards();
 
     if (newCard === oldCard) {
-        console.log('lika');
         addPoints();
     } else {
         wrong();
@@ -155,7 +147,6 @@ nextHigher.addEventListener('click', function () {
 
     decreaseCards();
     if (newCard > oldCard) {
-        console.log('högre');
         addPoints();
     } else {
         wrong();
@@ -163,3 +154,4 @@ nextHigher.addEventListener('click', function () {
     oldCard = newCard;
 });
 
+// Fixa game-over vyn
