@@ -43,8 +43,8 @@ function randomNumber() {
 function setCard(card) {
     // Skapa kortet
     let cardEl = document.createElement('article');
-    cardEl.classList.add('card');
     
+    cardEl.classList.add('card');
     // Ge kortet rätt färg i UIn
     if (card.suit === '&hearts;' || card.suit === '&diams;') {
         card.color = 'red';
@@ -53,18 +53,18 @@ function setCard(card) {
     }
 
     cardEl.innerHTML = `
-        <section class="front">
-            <header>
-                <span class="${card.color}">${card.suit}</span>
-                <span>${card.value}</span>
-            </header>
-            <section class="${card.color} suit">${card.suit}</section>
-            <footer>
-                <span class="${card.color}">${card.suit}</span>
-                <span>${card.value}</span>
-            </footer>
-        </section>
-        <section class="back"></section>
+    <section class="front">
+    <header>
+    <span class="${card.color}">${card.suit}</span>
+    <span>${card.value}</span>
+    </header>
+    <section class="${card.color} suit">${card.suit}</section>
+    <footer>
+    <span class="${card.color}">${card.suit}</span>
+    <span>${card.value}</span>
+    </footer>
+    </section>
+    <section class="back"></section>
     `;
     document.querySelector('.placeholder').appendChild(cardEl);
 };
