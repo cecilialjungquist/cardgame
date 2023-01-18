@@ -34,7 +34,7 @@ let nextEqual = document.querySelector('#equal');
 let nextHigher = document.querySelector('#higher');
 
 let newCard = 0;
-let oldCard = renderCard();
+let oldCard = drawCard();
 
 function randomNumber() {
     return Math.floor(Math.random() * cardstack.length);
@@ -43,7 +43,7 @@ function randomNumber() {
 function setCard(card) {
     // Skapa kortet
     let cardEl = document.createElement('article');
-    
+
     cardEl.classList.add('card');
     // Ge kortet rätt färg i UIn
     if (card.suit === '&hearts;' || card.suit === '&diams;') {
@@ -53,23 +53,23 @@ function setCard(card) {
     }
 
     cardEl.innerHTML = `
-    <section class="front">
-    <header>
-    <span class="${card.color}">${card.suit}</span>
-    <span>${card.value}</span>
-    </header>
-    <section class="${card.color} suit">${card.suit}</section>
-    <footer>
-    <span class="${card.color}">${card.suit}</span>
-    <span>${card.value}</span>
-    </footer>
-    </section>
-    <section class="back"></section>
-    `;
+        <section class="front">
+            <header>
+                <span class="${card.color}">${card.suit}</span>
+                <span>${card.value}</span>
+            </header>
+            <section class="${card.color} suit">${card.suit}</section>
+            <footer>
+                <span class="${card.color}">${card.suit}</span>
+                <span>${card.value}</span>
+            </footer>
+        </section>
+        <section class="back"></section>
+        `;
     document.querySelector('.placeholder').appendChild(cardEl);
 };
 
-function renderCard() {
+function drawCard() {
     let index = randomNumber();
     setCard(cardstack[index]);
 
@@ -88,15 +88,15 @@ function renderCard() {
     let renderedCard = cardstack[index].value;
 
     // Tar bort slumpat kort
-    cardstack.splice(index, 1); 
+    cardstack.splice(index, 1);
 
     return renderedCard;
 };
 
 
-function addPoints() {
+function addPoints(points) {
     let score = document.querySelector('header p .score');
-    let scoreCounter = parseInt(score.innerHTML) + 100;
+    let scoreCounter = parseInt(score.innerHTML) + points;
     score.innerHTML = `${scoreCounter}`;
 };
 
@@ -119,11 +119,18 @@ function wrong() {
 };
 
 nextLower.addEventListener('click', function () {
-    newCard = renderCard();
-
+    newCard = drawCard();
     decreaseCards();
+
     if (newCard < oldCard) {
-        addPoints();
+        let points = 3;
+        // Om gamla kortet är mindre än 7, högre risk att betta lägre
+        if (oldCard < 7) {
+            // mer poäng ju lägre nya är
+            points = 14 - newCard;
+        }
+
+        addPoints(points);
     } else {
         wrong();
     }
@@ -131,11 +138,12 @@ nextLower.addEventListener('click', function () {
 });
 
 nextEqual.addEventListener('click', function () {
-    newCard = renderCard();
+    newCard = drawCard();
     decreaseCards();
 
     if (newCard === oldCard) {
-        addPoints();
+        // Hög risk med likvärdigt = maxpoäng
+        addPoints(15);
     } else {
         wrong();
     }
@@ -143,15 +151,21 @@ nextEqual.addEventListener('click', function () {
 });
 
 nextHigher.addEventListener('click', function () {
-    newCard = renderCard();
+    newCard = drawCard();
 
     decreaseCards();
     if (newCard > oldCard) {
-        addPoints();
+        let points = 3;
+        // Om gamla kortet är högre än 7, högre risk att betta högre
+        if (oldCard > 7) {
+            // mer poäng ju högre nya kortet är
+            points = newCard - 2;
+        }
+        addPoints(points);
     } else {
         wrong();
     }
     oldCard = newCard;
 });
 
-// Fixa game-over vyn
+// Fixa game-over vyn???
