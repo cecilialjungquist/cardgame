@@ -1,1 +1,1 @@
-# cardgame
+# Cardgame with vanilla js
