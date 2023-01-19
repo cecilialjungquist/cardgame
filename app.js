@@ -124,8 +124,8 @@ nextLower.addEventListener('click', function () {
 
     if (newCard < oldCard) {
         let points = 3;
-        // Om gamla kortet är mindre än 7, högre risk att betta lägre
-        if (oldCard < 7) {
+        // Om gamla kortet är mindre än 8, högre risk att betta lägre
+        if (oldCard < 8) {
             // mer poäng ju lägre nya är
             points = 14 - newCard;
         }
@@ -156,8 +156,8 @@ nextHigher.addEventListener('click', function () {
     decreaseCards();
     if (newCard > oldCard) {
         let points = 3;
-        // Om gamla kortet är högre än 7, högre risk att betta högre
-        if (oldCard > 7) {
+        // Om gamla kortet är högre än 8, högre risk att betta högre
+        if (oldCard > 8) {
             // mer poäng ju högre nya kortet är
             points = newCard - 2;
         }
