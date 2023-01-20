@@ -24,7 +24,17 @@ body {
 
 #gameover.show {
     display: flex;
+    flex-direction: column;
     animation: fade .3s ease;
+}
+
+#gameover button {
+    padding: 1rem;
+    appearance: none;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: #222;
 }
 
 #gameover h1 {

@@ -111,8 +111,7 @@ function wrong() {
     let triesLeftCounter = triesLeft.innerHTML - 1;
 
     if (triesLeftCounter < 1) {
-        alert('Spelet slut!');
-        return location.reload();
+        gameOver();
     } else {
         triesLeft.textContent = triesLeftCounter;
     }
@@ -168,4 +167,13 @@ nextHigher.addEventListener('click', function () {
     oldCard = newCard;
 });
 
-// Fixa game-over vyn???
+// game over-vy - Av Philippa
+function gameOver() {
+    document.querySelector('#gameover').classList.add('show');
+    let retryBtn = document.querySelector('.retry');
+
+    retryBtn.addEventListener('click', () => {
+    location.reload();
+    });
+
+};
